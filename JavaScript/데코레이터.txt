@@ -1,0 +1,110 @@
+데코레이터 == 데코레이터 함수
+
+	: 새 함수를 반환하여 전달된 함수 또는 메서드의 동작을 수정하는 함수
+	: 객체에 새로운 행동을 추가하는 효과적인 방법으로, 필요한 시점에 새로운 행동을 동적으로 장식할 수 있어
+	 클래스 계통의 상부측 클래스에 많은 책임과 기능이 누적되는 것을 피할 수 있음
+
+
+https://godsenal.com/posts/Javascript-Decorator-%EB%AC%B8%EB%B2%95/
+
+class
+	타겟 class의 생성자를 인자로 받음
+	function whiteColor(target) {
+		target.prototype.color = "white";
+	}
+	
+	@whiteColor
+	class Paint {}
+
+	const snow = new Paint();	//생성자를 인자로 보냄
+
+	
+		
+
+	//인자 넘겨주기
+	function withColor(color) {				//직접 넣어준 인자는 감싼 함수의 인자로 들어감
+		return function(target) {			//return 함수로 인자들이 들어감
+			target.prototype.color = color;
+		};
+	}
+
+	@withColor("blue");
+	class Paint {}
+
+	const sky = new Paint();
+
+
+
+class 멤버
+	target인자, 멤버의 이름, 멤버의 descriptor를 받음
+
+	//예시 1	
+		function readonly(target, name, descriptor) {
+	  		descriptor.writable = false;
+	  		return descriptor;
+		}
+	
+		class Example {
+	  		@readonly
+	  		readonlyFunc() {
+	    			console.log("This method is readonly!");
+	  		}
+		}
+	
+		const example = new Example();
+		example.readonlyFunc = () => console.log("change!");		//바뀌지 않음
+		example.readonlyFunc(); // This method is readonly!
+
+
+	
+	//예시 2
+
+		function deprecate(message) {
+	  		return (target, name, descriptor) => {
+	    			const origin = descriptor.value; // property의 value
+	    			descriptor.value = function(...args) {
+	      				console.log(`Deprecate warning[${name}]: ${message}`);
+	      				return origin.apply(this, args);
+	    			};
+	    			return descriptor;
+	  		};
+		}
+	
+		class Example {
+	  		@deprecate('Consider to use "newFunc" instead')
+	  		oldFunc() {
+	    			console.log("This is old function.");
+	  		}
+	  		newFunc() {
+	    			console.log("This is new function.");
+	  		}
+		}
+	
+		const example = new Example();
+		example.oldFunc();
+		// Deprecate warning[oldFunc]: Consider to use "newFunc" instead
+		// This is old function.
+
+
+
+	//ECMAScript stage-3 에 있는 class의 instance field에도 사용가능함
+		class Proposal {
+			@readonly decorator = "stage-2";
+			...
+		}
+
+
+
+
+
+React에서 사용
+	//리액트 컴포넌트도
+
+
+
+
+
+
+
+
+
