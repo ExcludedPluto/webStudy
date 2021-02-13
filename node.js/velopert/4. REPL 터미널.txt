@@ -1,0 +1,67 @@
+REPL : Read Eval Print Loop 의 약자
+	
+	1. 윈도우 커맨드, Unix/Linux Shell 처럼 사용자가 커맨드를 입력하면 시스템이 값을 반환하는 환경
+	
+	2. Node.js는 REPL 환경과 함께 제공되며, 다음과 같은 기능을 수행 가능
+		Read : 유저의 값을 입력받아 JS 데이터 구조로 메모리에 저장함
+		Eval : 데이터를 처리함
+		Print : 결과값을 출력함
+		Loop : REP 를 유저가 ctrl + c 를 두번 눌러 종료할 때까지 반복함
+
+
+
+REPL 동작
+
+	1. 시작 : 터미널에 node 를 입력하면 됨 
+	
+	2. 연산 : 커맨드에 1 + 5 등 연산식을 입력하면 됨
+	
+	3. 변수사용 : 변수에 값을 저장하고 나중에 출력할 수 있음.
+			var 변수를 사용하면 변수의 값이 출력되지않고, var를 사용하지 않으면 값이 출력됨
+
+		> x = 10
+		10
+		> var y = 5
+		undefined
+		> x + y
+		15
+
+	4. multiLine 표현식
+
+		> do {
+		... x++;
+		... console.log("x : " + x);
+		... } while(x < 3);
+		x : 1
+		x : 2
+		x : 3
+		undefined
+		>
+
+	5. underscore 변수 : 밑줄 _ 변수는 최근 결과값을 저장함
+	
+		> var x = 10;
+		undefined
+		> var y = 5;
+		undefined
+		> x + y;
+		15
+		> var sum = _
+		undefined
+		> console.log(sum);
+		15
+		undefined
+		>
+
+
+REPL 커맨드
+	Ctrl + c 	: 현재 명령어를 종료함
+	ctrl + c (2번)	: Node REPL를 종료함
+	ctrl + d	: node REPL를 종료함
+	위/아래 키 	: 명령어 히스토리를 탐색하고 이전 명령어를 수정
+	tab		: 현재 입력란에 쓴 값으로 시작하는 명령어 / 변수 목록을 확인
+	.help		: 모든 커맨드 목록을 확인함
+	.break		: 멀티라인 표현식 입력 도중 입력을 종료함
+	.clear		: .break와 동일
+	.save finename	: 현재 Node REPL 세션을 파일로 저장함
+	.load filename 	: 현재 Node REPL 세션을 파일에서 불러옴

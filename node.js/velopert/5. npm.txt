@@ -1,0 +1,57 @@
+NPM : Node package manager
+	
+	1. NPM Search에서 탐색 가능한 Node.js 패키지/모듈 저장소
+	2. Node.js 패키지 설치 및 버전 / 호환성 관리를 할 수 있는 커맨드라인 유틸리티
+
+
+
+NPM 버전 확인 및 업데이트
+
+	1. 버전 확인
+		$ npm --version
+	
+	2. 업데이트
+		$ sudo npm install npm -g
+
+	-일부 패키지는 설치할 때 python 을 요구하므로 호환성을 맞추기 위해서 파이썬 런타임을 설치하도록 함
+
+
+
+
+npm으로 모듈 설치
+	npm install <모듈>
+
+	설치후 require로 불러올 수 있음
+
+	var express = require("express");
+
+
+
+
+
+글로벌 vs 로컬 모듈 설치
+	1. 기본적으로 npm은 모듈을 로컬모드로 설치함 -> 명령어를 실행한 디렉토리 안에 있는 node_modules에 설치함
+
+	2. 글로벌 설치는 시스템 디렉토리에 설치하는 것을 의미
+		$ sudo npm istall express -g		//루트 계정이 아니면 sudo를 붙여야함
+
+	3. 글로벌 설치 이후 바로 사용할 수 없음. 아래 명령어를 실행해야 require 할 수 있다.
+		$ npm install -g express
+
+
+
+package.json 
+	1. 노드 어플리케이션 / 모듈의 경로에 위치해 있으며 패키지의 속성을 정의함
+	2. 프로젝트가 의존하는 모듈과 모듈버전의 정보를 담고 있음
+
+
+
+
+모듈 제거  : npm uninstall express
+
+
+모듈 업데이트 : npm update express
+
+
+모듈 검색 : npm search express
+

@@ -1,0 +1,17 @@
+변수의 이름 옆에 :[type] 으로 타입을 정해줄 수 있다. 적지 않으면 any
+
+	const sayHi = (name:string, age:number, gender:string) => {
+ 	   console.log(`Hello ${name}, you are ${age}, you are a ${gender}!`);
+	}
+
+	const name:string = "shin";
+
+
+
+함수의 파라미터 선언 옆에 :[type] 으로 반환값의 타입을 정해줄 수 있음. 적지 않으면 void
+	const sayHi = (name:string, age:number, gender:string):void => {
+ 	   console.log(`Hello ${name}, you are ${age}, you are a ${gender}!`);
+	}
+
+
+

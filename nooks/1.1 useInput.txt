@@ -1,0 +1,39 @@
+initialValue와 validator로 input 상태를 조작하는 hook
+
+
+
+const useInput = (initialValue, validator) => {
+  const [value, setValue] = useState(initialValue);
+
+  const onChange = (event) => {
+    const {
+      target: { value }
+    } = event;
+
+    let willUpdate = true;			//일단 true로 설정
+
+    if (typeof validator === "function") {	//만약 사용자가 함수형태인 validator를 넘겼을 경우 검사
+      willUpdate = validator(value);		//검사
+    }
+
+    if (willUpdate) {				// true면 업데이트
+      setValue(value);
+    }
+  };
+
+  return { value, onChange };			//value와 onChange를 리턴하여 가질 수 있도록 함
+};
+
+
+
+
+
+ex)
+
+
+const App = () => {
+  const maxLength = (value) => value.length <= 10;	// 길이가 10 이하일때만 true를 리턴하도록 함
+  const name = useInput("Mr. ", maxLength);		// 초깃값으로 Mr.를 넣음
+  
+  return  <input placeholder="Name" {...name} />;	// 이런 식으로, value={name.value} onChange={name.onChange} 안하고 
+};							// 흩뿌려 줄 수 있음

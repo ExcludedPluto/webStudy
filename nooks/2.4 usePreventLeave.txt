@@ -1,0 +1,31 @@
+페이지를 떠나기 전에 확인 메세지를 날리는 것을 설정하는 함수와 비활성화하는 함수를 리턴하는 hook
+
+
+const usePreventLeave = () => {
+  const listener = (event) => {
+    event.preventDefault();
+    event.returnValue = "";
+  };
+  const enablePrevent = () => {
+    window.addEventListener("beforeunload", listener);
+  };
+  const disablePrevent = () => {
+    window.removeEventListener("beforeunload", listener);
+  };
+  return { enablePrevent, disablePrevent };
+};
+
+
+
+ex)
+
+const App = () => {
+  const { enablePrevent, disablePrevent } = usePreventLeave();
+
+  return (
+    <div>	
+      <button onClick={enablePrevent}>Protect</button>			// 클릭시 페이지를 벗어나려고 하면 확인 메세지
+      <button onClick={disablePrevent}>Unprotect</button>		// 클릭시 확인을 안함
+    </div>
+  );
+};

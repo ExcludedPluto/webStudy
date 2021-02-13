@@ -1,0 +1,28 @@
+interface 같은 경우는 컴파일 하면 js 파일에는 나타나지 않는데, 나타나길 원하고 같은 기능을 하려면 class를 사용할 수 있음
+
+
+그리고 class에선 새 기능이 있는데, public하고 private으로 접근제어자를 설정해줄수 있다는 것이다.(물론 컴파일하면 js에는 보이지 않음)
+
+
+class Human{
+    public name:string;
+    public age:number;
+    public gender:string;
+    constructor(name:string, age:number, gender:string) {		//생성자에도 type을 정해줄 수 있음
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+    }
+}
+
+const lynn = new Human("Lynn", 10, "female");
+
+const sayHi = (person:Human):void => {
+    console.log(`Hello ${person.name}, you are ${person.age}, you are a ${person.gender}!`);
+}
+
+sayHi(lynn);
+
+
+
+

@@ -1,0 +1,33 @@
+메세지와, 확인 시 실행할 함수, 취소 시 실행할 함수를 받고 함수를 만들어주는 hook
+
+
+export const useConfirm = (message = "", onConfirm, onCancel) => {
+   if (typeof onConfirm === "function") {				//onConfirm 은 무조건 있어야하는 함수. 확인
+      const confirmAction = () => {
+         if (window.confirm(message)) {
+            onConfirm();
+         } else if (typeof onCancel === "function") {			// onCancel은 없어도 됨. 단, 있으면 함수형인지 확인하고 실행
+            onCancel();
+         }
+      };
+      return confirmAction;						// 함수를 반환
+   }
+};
+
+
+ex)
+	
+
+const App = () => {
+
+  const deleteWord = () => console.log("delete");
+  const abort = () => console.log("abort");
+
+  const confirmDelete = useConfirm("Are you sure?", deleteWord, abort);
+
+  return (
+    <div>
+      <button onClick={confirmDelete}>Delete</button>				// 클릭시 useConfirm으로 반환받은 함수가 실행
+    </div>
+  );
+};

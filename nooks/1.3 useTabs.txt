@@ -1,0 +1,34 @@
+initialTab과 전체 배열을 받아서, 사용자가 변화시키는 조건에 맞추어 현재 아이템을 바꿔주는 hook
+
+
+
+const useTabs = (initialTab, allTabs) => {			// 처음 index
+  const [currentIndex, setIndex] = useState(initialTab);	
+
+  if (!allTabs || !Array.isArray(allTabs)) {			// allTabs가 없거나 배열로 넘어오지 않았으면 그냥 리턴
+    return;
+  }
+
+  return {							// 현재 아이템과 setIndex를 리턴
+    currentItem: allTabs[currentIndex],				
+    changeItem: setIndex
+  };
+};
+
+
+
+
+ex)
+
+const App = () => {
+  const { currentItem, changeItem } = useTabs(0, content);			// 처음 인덱스는 0
+
+  return (
+    <div className="App">
+      {content.map((section, index) => (
+        <button onClick={() => changeItem(index)}>{section.tab}</button>	// 각 버튼에 인덱스를 가지고 현재 아이템 조절
+      ))}
+      <div>{currentItem.content}</div>						// 현재 아이템 렌더
+    </div>
+  );
+};

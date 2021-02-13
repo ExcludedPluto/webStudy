@@ -1,0 +1,23 @@
+update에서 변경된 것이 제대로 들어갔는지, 잘못된 id를 수정하면 에러를 보내는지 테스트
+
+  describe('update', () => {
+    it('should update a movie', () => {
+      service.create({
+        title: 'Test Movie',
+        genres: ['test'],
+        year: 2000,
+      });
+
+      service.update(1, { title: 'Updated Test' });
+      const movie = service.getOne(1);
+      expect(movie.title).toEqual('Updated Test');
+    });
+
+    it('should return a 404', () => {
+      try {
+        service.update(999, { title: 'Updated Test' });
+      } catch (e) {
+        expect(e).toBeInstanceOf(NotFoundException);
+      }
+    });
+  });

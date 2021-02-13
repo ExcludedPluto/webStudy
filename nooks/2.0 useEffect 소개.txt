@@ -1,0 +1,30 @@
+useEffect = componentDidMount ComponentWillUnMount, ComponentDidUpdate
+
+
+useEffect에 함수만 넣으면, 컴포넌트의 어떤 변화든 감지하여 안에 함수를 실행함
+
+	useEffect(() => {
+		console.log("hello");
+	}};
+
+
+
+하지만, deps 를 같이 넣어주면, deps 안에 요소들에 변화가 있을 때만 실행함
+
+	useEffect(() => {
+		console.log("hello");
+	}, []};					//한번만 실행
+
+
+	useEffect(() => {
+		console.log("hello");
+	}, [number]};				//number가 바뀌었을 때만 실행
+
+
+
+return으로 ComponentWillUnMount 을 실행하므로, return 에 정리 작업을 추가하면 됨
+
+
+      return () => {					
+            current.removeEventListener("click", onClick);
+      };

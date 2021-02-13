@@ -1,0 +1,28 @@
+UpdateMovieDto를 만들어보자
+
+
+1. dto 폴더에 update-movie.dto.ts를 생성
+
+2. UpdateMovieDto는 create의 세가지중 하나만 있어도되고 두개만 있어도 됨. 따라서 다음처럼 ? 만 추가
+
+	export class CreateMovieDto {
+  		@IsString()
+  		readonly title?: string;
+  		@IsNumber()
+  		readonly year?: number;
+	
+  		@IsOptional()
+  		@IsString({ each: true })
+  		readonly genres: string[];
+	}
+
+
+3. 하지만 이거를 PartialType을 이용해 간결하게 표현할 수 있다. 
+
+	npm i @nestjs/mapped-types
+
+	//update-movie.dto.js
+	export class UpdateMovieDto extends PartialType(CreateMovieDto) {}
+
+	
+	-> 이렇게하면 CreateMovieDto에 2. 와 똑같은 의미가 된다.

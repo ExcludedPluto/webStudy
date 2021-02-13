@@ -1,0 +1,45 @@
+함수로 넘어온 onClick을 useEffect에 등록하고, useRef()로 만든 state를 반환하여 특정 컴포넌트로 연결시키고, 
+
+그 컴포넌트로 누를때마다 onClick이 실행되도록 하는 hook
+
+
+
+export const useClick = (onClick) => {
+   const element = useRef();
+
+   useEffect(() => {
+      const current = element.current;
+
+      if (current && typeof onClick === "function") {
+         current.addEventListener("click", onClick);
+      }
+
+      return () => {						//componentWillUnmount로 정리
+         if (current && typeof onClick === "function") {
+            current.removeEventListener("click", onClick);
+         }
+      };
+
+   }, [onClick]);
+
+   return element;
+};
+
+
+
+
+
+
+ex)
+
+
+const App = () => {
+  const sayHello = () => console.log("say Hello");
+  const title = useClick(sayHello);
+
+  return (
+    <div>
+      <h1 ref={title}>Hi</h1>					//이 컴포넌트를 누를때마다 sayHello 실행
+    </div>
+  );
+};

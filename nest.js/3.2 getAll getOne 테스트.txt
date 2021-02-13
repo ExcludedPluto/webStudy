@@ -1,0 +1,66 @@
+describe 안에 describe를 사용해도 된다.
+
+	describe('MoviesService', () => {
+		...
+		describe('getAll()', () => {
+			...
+		});
+	});
+	
+
+	이렇게 하면 테스트할 때
+
+	MoviesService
+		~~~~
+		getAll()
+			~~~ 
+
+	이런식으로 테스트한다.
+	
+	따라서 한 클래스를 상위에 두고, 그 멤버들을 describe로 하위에 두어 테스트하는 것이 편리하다
+
+
+
+
+
+getAll() 이 반환하는게 Array가 맞는지 테스트
+
+	describe('getAll()', () => {
+    		it('shoud return an array', () => {
+      			const result = service.getAll();
+      			expect(result).toBeInstanceOf(Array);
+    		});
+  	});
+
+	-> 이미 상위 describe에서 beforeEach로 service에 MoviesService를 받아왔으므로 그냥 써서 result를 받으면 됨
+
+
+
+
+getOne() 이 제대로 movie를 리턴하는지, 없는 아이디로 접근하면 오류를 내는지 테스트
+
+  	describe('getOne()', () => {
+    		it('should return a movie', () => {
+      			service.create({			// 테스트 movie를 생성
+        			title: 'Test Movie',
+        			genres: ['test'],
+        			year: 2000,
+      			});
+      			const movie = service.getOne(1);	// 만든 테스트 movie를 받음
+
+      			expect(movie).toBeDefined();		// 정의 됐는지 확인
+      			expect(movie.id).toEqual(1);		// id가 1인지 확인
+    		});
+
+    		it('should throw 404 error', () => {
+      			try {
+        			service.getOne(999);		//없는 id로 접근
+      			} catch (e) {
+        			expect(e).toBeInstanceOf(NotFoundException);			//에러인지 확인
+        			expect(e.message).toEqual(`Movie with ID 999 Not found`);	//메세지가 제대로 나오는지 확인
+      			}
+    		});
+  	});
+
+
+

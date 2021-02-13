@@ -1,0 +1,41 @@
+1. 일단 구조가 맞는지 static 함수로 Block 내부에 선언(밖에 해도 된다.)
+
+	static validateStructure = (aBlock: Block) : boolean => 
+      		typeof aBlock.index ==="number" && 
+        	typeof aBlock.hash === "string" && 
+        	typeof aBlock.previousHash == "string" && 
+        	typeof aBlock.timestamp === "number" && 
+        	typeof aBlock.data ==="string";
+
+
+
+2. 해쉬 만들어주는 함수 선언
+
+const getHashforBlock = (aBlock:Block):string => Block.calculateBlockHash(aBlock.index, aBlock.previousHash, aBlock.timestamp, aBlock.data);
+
+
+
+
+3. 다음처럼, 검사할 블록과 이전 블록을 받아와 검사한다.
+
+	const isBlockValid = (candidateBlock:Block, previousBlock:Block):boolean => {
+
+    		if(!Block.validateStructure(candidateBlock)) {
+    	    		return false;
+
+    		} else if(previousBlock.index + 1 !== candidateBlock.index) {
+    	    		return false;
+
+    		} else if(previousBlock.hash !== candidateBlock.previousHash) {
+    	    		return false;
+
+    		}else if(getHashforBlock(candidateBlock) !== candidateBlock.hash) {
+        		return false;
+
+    		} else {
+        		return true;
+    		}
+	}
+
+
+

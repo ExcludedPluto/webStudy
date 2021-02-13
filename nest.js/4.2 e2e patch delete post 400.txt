@@ -1,0 +1,37 @@
+파이프를 추가했기에 post 400도 테스트 가능하다.
+
+	it('POST 400', () => {
+      		return request(app.getHttpServer())
+        		.post('/movies')
+        		.send({
+          			title: 'Test',
+          			year: 2000,	
+          			genres: ['test'],
+          			other: 'thdd',		//잘못된 데이터. 파이프에서 에러를 보냄
+        		})
+        		.expect(400);
+    	});
+
+
+
+
+
+
+patch 테스트
+
+	it('PATCH 200', () => {
+      		return request(app.getHttpServer())
+        		.patch('/movies/1')
+        		.send({
+          			title: 'tenet',
+        		})
+        		.expect(200);
+    	});
+
+
+delete 테스트
+
+	
+	it('DELETE 200', () => {
+      		return request(app.getHttpServer()).delete('/movies/1').expect(200);
+    	});

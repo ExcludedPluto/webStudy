@@ -1,0 +1,28 @@
+jest : nest.js에 테스트를 실행하면 이 라이브러리를 사용함
+	node, react, babel, ts, angular, vue 등을 테스트 할 수 있는 라이브러리임
+
+
+
+
+.spec.ts 파일 기본 구조
+
+
+	describe(<메세지>, callback);		// 메세지에는 보통 테스트하는 유닛(클래스, 컴포넌트, 함수) 이름을 작성함
+
+	callback 
+		
+		() => {
+			beforeEach ...		// 테스트 실행 전에 실행하는것
+
+			it(<메세지>, () => {		//individual test. 메세지와 콜백을 넣음
+				expect(2+2).toEqual(4);	// expect 안에 테스트하는 구문을 넣고, 그 다음에 .~~ 로 테스트한다.
+			});
+
+
+
+
+
+beforeEach : 하위에 속한 각 테스트가 실행되기 전에 처리하는 것. 매 테스트마다 필요한 변수나, 데이터베이스 상태를 적용함
+beforeAll : 테스트 전에 한번 실행함. 상태를 계속 들고 가고 싶을 때 사용
+afterEach : 하위에 속한 각 describe 문에 실행된 후 정리작업을 실행
+afterAll

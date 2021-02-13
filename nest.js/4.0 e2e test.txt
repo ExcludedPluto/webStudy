@@ -1,0 +1,61 @@
+npm run test:e2e 로 테스트함
+
+-> test/app.e2e-spec.ts 가 실행됨
+
+-> 이 안에 테스트 코드를 작성함
+
+
+
+
+
+getAll 테스트
+	
+	-> 유닛테스트 했던 때와 마찬가지로 describe 로 movies 안에 들어감
+
+	-> getAll은 요청이 GET 이었으므로, it의 메세지에 GET을 넣음
+	
+	-> 요청을 직접 보내야하므로 supertest 안의 request를 사용하여 서버를 받고, 요청을 보냄
+
+	-> 예상되는 response 코드는 200 이며, 값은 빈 배열.
+
+	
+	describe('/movies', () => {
+    		it('GET', () => {
+      			return request(app.getHttpServer()).get('/movies').expect(200).expect([]);
+    		});
+	});
+
+
+
+
+
+
+create 테스트
+
+	-> create 요청은 POST 였으므로, 메세지에 POST를 전달
+
+	-> 마찬가지로 request로 서버를 얻고, post 요청을 보냄
+
+	-> 이때 send로 내용까지 보내야 한다.
+
+	-> 제대로 만들어지면 201 코드를 보냄
+
+
+	describe('/movies', () => {
+    		it('GET', () => {
+      			return request(app.getHttpServer()).get('/movies').expect(200).expect([]);
+    		});
+
+    		it('POST', () => {
+      			return request(app.getHttpServer())
+        			.post('/movies')
+        			.send({
+          				title: 'Test',
+          				year: 2000,
+          				genres: ['test'],
+        			})
+        			.expect(201);
+    		});
+	});
+
+

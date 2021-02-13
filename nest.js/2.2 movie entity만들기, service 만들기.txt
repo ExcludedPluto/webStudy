@@ -1,0 +1,90 @@
+entity 만들기
+
+	: 원래라면 데이터베이스에 연결해야하지만, 여기서는 그렇게하지 않고 그냥 entity파일을 만들어서 배열로 사용함
+
+	entity 폴더를 만들고, 안에 movie.entity.ts 파일 생성
+
+	대충 아래처럼 클래스 만든다.
+
+		export class Movie {
+	  		id: number;
+	  		title: string;
+	  		year: number;
+	  		genres: string[];
+		}
+	
+
+service 생성
+
+	$ nest g s
+	
+	~~ name : movies
+
+	
+	위에서 선언한 Movie 클래스를 불러오고, 아래처럼 함수들을 선언해줌.
+
+	export class MoviesService {
+	  	private movies: Movie[] = [];
+	
+	 	getAll(): Movie[] {
+	    		return this.movies;
+	  	}
+	
+	  	getOne(id: string): Movie {
+	    		return this.movies.find((movie) => movie.id === parseInt(id));
+	  	}
+	
+	  	deleteOne(id: string): boolean {
+	    		this.movies.filter((movie) => movie.id !== +id);
+	    		return true;
+	  	}
+	
+	  	create(movieData) {
+	    		this.movies.push({
+	      			id: this.movies.length + 1,
+	      			...movieData,
+	    		});
+	  	}
+	}
+
+
+
+controller에 연결
+	
+	: 단순히 MovieService를 import하지 말고, constructor을 선언하고 거기서 요청하여 불러온다.
+	: 각 함수는 단순 string 반환에서, service 함수를 호출하는 형태로 바꾸고, 반환형도 설정해주자.
+
+	export class MoviesController {
+  		constructor(private readonly moviesServiece: MoviesService) {}
+
+  		@Get()
+  		getAll(): Movie[] {
+    			return this.moviesServiece.getAll();
+  		}
+
+  		@Get(':id')
+  		getOne(@Param('id') movieId: string) {
+    			return this.moviesServiece.getOne(movieId);
+  		}
+
+  		@Post()
+  		create(@Body() movieData) {
+    			return this.moviesServiece.create(movieData);
+  		}
+
+  		@Delete(':id')
+  		remove(@Param('id') movieId: string) {
+    			return this.moviesServiece.deleteOne(movieId);
+  		}	
+
+  		@Patch(':id')
+  		patch(@Param('id') movieId: string) {
+    			return `this will update a movie with the id : ${movieId}`;
+  		}
+	}
+
+
+	
+
+
+	

@@ -1,0 +1,58 @@
+Node.js Event
+
+	1. Node.js 기반으로 만들어진 서버가 가동되면, 변수들을 초기화하고, 함수를 선언하고 이벤트가 일어날 때까지 기다림
+
+	2. 이벤트 위주 어플리케이션에서는 이벤트를 대기하는 메인 루프가 있고, 이벤트를 감지하면 콜백 함수를 호출함
+
+	3. 이벤트 vs 콜백함수 : 콜백함수는 비동기 함수에서 결과를 반환할 때 호출되지만, 이벤트 핸들링은 옵저버 패턴에 의해 작동됨
+
+	4. EventListners : 옵저버 역할을 하는 함수. 이벤트를 기다리다가 이벤트가 실행되면 이벤트를 처리함.
+		
+	5. Node.js 에는 events 모듈과 eventEmitter 클래스가 내장되어있는데, 이를 이용하여 이벤트와 이벤트 핸들러를 연동시킬 수 있음
+		
+		// events 모듈 사용
+		var events = require("events");
+		
+		// eventEmitter 객체 생성
+		var eventEmitter = new events.EventEmitter();
+
+		// 이벤트와 이벤트 핸들러 연동
+		// 이벤트 이름은 임의로 설정 가능
+		eventEmitter.on("eventName", eventHandler);
+
+		// 이벤트 발생
+		eventEmitter.emit("eventName");
+
+
+이벤트 핸들링 예제
+	var events = require("events");
+
+	var eventEmitter = new events.EventEmitter();
+
+	// EventHandler 함수 생성
+	var connectHandler = () => {
+	   console.log("Connection Successful");
+
+	   //data_received 이벤트 발생시키기
+	   eventEmitter.emit("data_received");
+	};
+
+	//connection 이벤트와 connectHandler 이벤트 핸들러를 연동
+	eventEmitter.on("connection", connectHandler);
+
+	// data_received 이벤트와 익명 함수와 연동
+	// 함수를 변수 안에 담는 대신 .on 메소드의 인자로 직접 함수를 전달
+	eventEmitter.on("data_received", () => {
+		console.log("Data Received");
+	});
+
+	// connection 이벤트 발생시키기
+	eventEmitter.emit("connection");
+
+	console.log("Program has ended");
+	
+	
+	-> .emit으로 connection 이벤트 발생 
+	-> connection 이벤트는 console.log 출력 후 data_received 이벤트 발생
+	-> data_received 이벤트 발생 -> 출력
+	-> 프로그램 종료

@@ -1,0 +1,23 @@
+콜백 비동기함수 예시 코드
+
+	var fs = require("fs");
+	
+	fs.readFile("input.txt", (err, data) => {
+		if(err) 
+			return console.error(err);
+		else
+			console.log(data.toString());
+	});
+
+	console.log("Program has ended");
+
+	
+	결과
+	Program has ended
+	<텍스트 파일 내용>
+
+	
+	-> 비동기 식으로 작동하기에 마지막 console.log 가 먼저 실행되고, 그다음 callback으로 등록한 함수가 실행됨
+
+	-> 모든 node 어플리케이션의 비동기식 함수에서는 마지막 매개변수로 콜백 함수를 받고,
+	  콜백함수의 첫번째 매개변수는 error이다.

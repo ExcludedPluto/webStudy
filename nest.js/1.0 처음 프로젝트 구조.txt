@@ -1,0 +1,32 @@
+처음 시작하면 hello world 라고 뜸
+
+->
+
+src안에 main.ts로 이동
+
+//main.ts
+AppModule로 NestFactory 생성.
+
+
+
+->
+
+
+//app.module.ts 
+
+데코레이터로 Module에 AppController를 컨트롤러로, AppService를 provider로 인자로 넣어주고, 빈 AppModule 클래스를 감쌈.
+
+
+
+-> 
+
+
+//app.controller.ts
+
+AppController 클래스는 AppService를 받아, getHello()를 출력함.
+Controller를 데코레이터로 지정하고, 클래스 안에서는 Get을 데코레이터로 지정한다.
+
+
+//app.service.ts
+
+Injectable을 데코레이터로 지정하고, getHello를 AppService 안에 선언한다.

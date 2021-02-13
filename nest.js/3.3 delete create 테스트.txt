@@ -1,0 +1,46 @@
+deleteOne()이 제대로 삭제해서 크기가 1 주는지, 없는 id 를 삭제하려고하면 에러를 뿜는지 테스트
+
+  describe('deleteOne()', () => {
+    it('deletes a movie', () => {
+      service.create({
+        title: 'Test Movie',
+        genres: ['test'],
+        year: 2000,
+      });
+
+      const beforeDelete = service.getAll().length;
+      service.deleteOne(1);
+      const afterDelete = service.getAll().length;
+
+      expect(afterDelete).toBeLessThan(beforeDelete);		//삭제하기 전 후 길이 비교
+    });
+
+    it('should return a 404', () => {
+      try {
+        service.deleteOne(999);
+      } catch (e) {
+        expect(e).toBeInstanceOf(NotFoundException);
+      }
+    });
+  });
+
+
+
+
+create() 가 제대로 만들어서 크기가 증가하는지 확인
+
+  describe('create()', () => {
+    it('creates a movie', () => {
+      const beforeCreate = service.getAll().length;
+      service.create({
+        title: 'Test Movie',
+        genres: ['test'],
+        year: 2000,
+      });
+      const afterCreate = service.getAll().length;
+
+      expect(afterCreate).toBeGreaterThan(beforeCreate);
+    });
+  })
+	
+

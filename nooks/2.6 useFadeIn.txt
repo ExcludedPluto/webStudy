@@ -1,0 +1,35 @@
+duration 과 delay를 받고, useRef 와 style을 반환하여 엘리먼트에 transition을 적용하는 hook
+
+
+export const useFadeIn = (duration = 1, delay = 0) => {		
+   const element = useRef();
+
+   useEffect(() => {
+      if (
+         element.current &&
+         typeof duration === "number" &&
+         typeof delay === "number"
+      ) {
+         const { current } = element;			// 현재 엘리먼트를 받고
+         current.style.opacity = 1;			// opacity는 1로 설정
+         current.style.transition = `opacity ${duration}s ease-in-out ${delay}s`;	// 넘어온 duration과 delay를 설정
+      }
+   }, []);
+
+   return { ref: element, style: { opacity: 0 } };		// ref와 style을 반환하여 바로 사용할 수 있게 함.
+};
+
+
+
+ex)
+
+
+const App = () => {
+  const fadeInH1 = useFadeIn(6, 4);
+
+  return (
+    <div>
+      <hi {...fadeInH1}>Hello</hi>
+    </div>
+  );
+};

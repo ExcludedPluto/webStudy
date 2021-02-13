@@ -1,0 +1,64 @@
+콜백함수를 받고, 엘리먼트와 풀스크린을 만드는 함수와 나가는 함수를 리턴함.
+
+엘리먼트로 적용할 요소를 정하고, 각 함수로 풀스크린을 만들거나 나가면 된다.
+
+각 함수가 실행될 때, 콜백함수로 각각 true, false 값을 넘긴다.
+
+
+export const useFullScreen = (callback) => {
+   const element = useRef();
+
+   const implementCallback = (isFull) => {
+      if (callback && typeof callback === "function") {
+         callback(true);
+      }
+   };
+   const triggerFullScreen = () => {
+      if (element.current) {
+         if (element.current.requestFullscreen) {
+            element.current.requestFullscreen();
+         } else if (element.current.mozRequestFullScreen) {
+            element.current.mozRequestFullScreen();
+         } else if (element.current.webkitRequestFullscreen) {
+            element.current.mozRequestFullScreen();
+         } else if (element.current.msRequestFullscreen) {
+            element.current.mozRequestFullScreen();
+         }
+         implementCallback(true);
+      }
+   };
+   const exitFull = () => {
+      if (document.exitFullscreen) {
+         document.exitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+         document.mozCancelFullScreen();
+      } else if (document.webkitExitFullscreen) {
+         document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) {
+         document.msExitFullscreen();
+      }
+      implementCallback(false);
+   };
+   return { element, triggerFullScreen, exitFull };
+};
+
+
+
+ex)
+
+const App = () => {
+  const fulls = (isFull) => {
+    console.log(isFull ? "full" : "small");
+  };
+  const { element, triggerFullScreen, exitFull } = useFullScreen(fulls);
+
+
+  return (
+    <div>
+      <div ref={element}>	
+        <h1 onClick={triggerFullScreen}>Hi </h1>
+        <button onClick={exitFull}>exit</button>
+      </div>
+    </div>
+  );
+};

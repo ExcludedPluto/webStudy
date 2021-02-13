@@ -1,0 +1,64 @@
+옵션과 원한다면 axiosInstance를 받아서 axios를 trigger 시키는 hook.
+
+데이터와 loading 중인지, 에러가 있는지를 확인하는 state를 반환.
+
+refetch를 trigger 시키는 함수도 반환하여 원할때 다시 실행하도록 한다. 
+
+
+
+export const useAxios = (opts, axiosInstance = defaultAxios) => {
+   const [state, setState] = useState({					// 초기 상태
+      loading: true,
+      error: null,
+      data: null,
+   });
+   const [trigger, setTrigger] = useState(0);				// 트리거 만들기
+
+   const refetch = () => {						// refetch 함수. 로딩으로 바꾸고, triger는 랜덤 숫자로 바꾸어 useEffect를 재실행 시킨다.
+      setState({
+         ...state,
+         loading: true,
+      });
+      setTrigger(Date.now());
+   };
+
+   useEffect(() => {
+      if (!opts.url) {					// 옵션에 url이 없으면 반환
+         return;
+      }
+      axiosInstance(opts)
+         .then((data) => {
+            setState({
+               ...state,
+               loading: false,
+               data,
+            });
+         })
+         .catch((error) => {
+            setState({ ...state, loading: false, error });
+         });
+   }, [trigger]);
+
+   return { ...state, refetch };
+};
+
+
+
+ex)
+
+const App = () => {
+  const { loading, data, error, refetch } = useAxios({			// 옵션의 url만 필수로 넣음
+    url: "https://yts.mx/api/v2/list_movies.json"
+  });
+
+  return (
+    <div>
+      <h1>{data && data.status}</h1>				
+      <h2>{loading && "Loading"}</h2>
+      <button onClick={refetch}>refetch</button>		//refetch 는 원할때 사용
+    </div>
+  );
+};
+
+
+

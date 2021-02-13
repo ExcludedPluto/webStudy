@@ -1,0 +1,4 @@
+ts에서는 import 형식을 다음처럼 해야한다
+
+
+import * as CryptoJS from "crypto-js";

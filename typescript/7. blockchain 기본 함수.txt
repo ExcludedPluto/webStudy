@@ -1,0 +1,57 @@
+1. 해쉬를 계산하는 함수 생성 : 객체를 만들지않고도 사용할 수 있게 static으로 선언
+				여기서 CryptoJS를 사용하기 위해 yarn add crypto-js로 설치해주자
+
+	class Block {
+	    public index:number;
+	    public hash:string;
+	    public previousHash:string;
+	    public data:string;
+	    public timestamp:number;
+	
+	    static calculateBlockHash = (index:number, previousHash:string, timestamp:number, data:string):string => {
+	        return CryptoJS.SHA256(index + previousHash + timestamp + data).toString();
+	    }
+	
+	    constructor (index:number,
+	        hash:string,
+	        previousHash:string,
+	        data:string,
+	        timestamp:number) {
+	           this.index= index;
+	            this.hash = hash;
+	           this.previousHash= previousHash;
+	            this.data= data;
+	            this.timestamp=timestamp; 
+	        }
+	}
+
+
+
+
+
+2. 블록체인을 얻는 함수, 가장 최근 블록을 얻는 함수, 새 타임스탬프를 만드는 함수 선언
+
+	const getBlockchain = () : Block[] => blockchain;
+
+	const getLatesBlock = () : Block => blockchain[blockchain.length-1];
+
+	const getNewTimeStamp = ():number=> Math.round(new Date().getTime() / 1000);
+
+
+
+
+3. 블록 만드는 함수
+
+	const createNewBlock = (data:string) : Block => {
+	    const previousBlock : Block = getLatesBlock();		// 마지막 블록을 얻고
+	    const newIndex : number = previousBlock.index + 1;		// 마지막 블록의 인덱스에서 + 1
+	    const newTimestamp : number = getNewTimeStamp();		// 2에서 만든 함수 활용
+
+	    const newHash : string = Block.calculateBlockHash(newIndex, previousBlock.hash, newTimestamp, data);	//static 함수 활용
+	
+	    const newBlock : Block = new Block(newIndex, newHash, previousBlock.previousHash, data, newTimestamp);	//새 블록 만들기
+
+	    blockchain.push(newBlock);		//새블록을 배열에 추가
+
+	    return newBlock;
+	}

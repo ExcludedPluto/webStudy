@@ -1,0 +1,37 @@
+1. nest cli로 controller 만들기
+
+	$ nest generate|g controller|co
+
+	~~~name? movies
+
+
+	->  자동으로 movies 컨트롤러가 생성되고, AppModule에 추가됨.
+	
+
+2. MoviesController 기본구조
+	@Controller('/movies')
+	export class MoviesController { }
+
+
+	//여기서 맨위 데코레이터 Controller 안 인자는 url의 엔트리 포인트를 뜻함.
+	//즉, /movies/  부터 시작한다는 얘기
+
+
+
+3. Rest 요소 간단 설명
+	@Get : 정보 획득
+	@Post : 정보 생성
+	@Delete : 정보 삭제
+	@Patch : 정보 일부분 업데이트
+	@Put : 정보 전체 업데이트
+
+
+4. nest.js 에서 정보를 얻을 때는 항상 요청해야한다. 
+   따라서 url에 있는 id를 얻을 때도 다름처럼 Param으로 요청해야함
+
+   이때 id와 Param에서 요청하는 id의 이름은 똑같아야 한다.
+
+	@Get('/:id')
+  	getOne(@Param('id') movieId: string) {
+    		return `This will return one movie with the id : ${movieId}`;
+  	}

@@ -1,0 +1,33 @@
+블록체인 : 소규모 데이터들이 체인형태로 연결되어 형성된 블록이라는 분산데이터 저장환경에 관리대상 데이터를 저장함으로써
+	  누구도 임의로 수정할 수 없고, 누구나 변경의 결과를 열람할 수 있게끔 만드는 기술
+
+	이전의 해쉬를 저장하고, 이전의 인덱스에 1을 더하여 현재의 인덱스로 만들어서 서로 연결시킨다.
+
+
+블록의 기본 형태
+
+class Block {
+    public index:number;
+    public hash:string;
+    public previousHash:string;
+    public data:string;
+    public timestamp:number;
+
+    constructor (index:number,
+        hash:string,
+        previousHash:string,
+        data:string,
+        timestamp:number) {
+           this.index= index;
+           this.hash = hash;
+           this.previousHash= previousHash;
+           this.data= data;
+           this.timestamp=timestamp; 
+        }
+}
+
+
+
+블록체인
+
+let blockchain:[Block];

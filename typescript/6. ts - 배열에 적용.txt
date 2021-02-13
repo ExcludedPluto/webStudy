@@ -1,0 +1,9 @@
+다음 클래스가 있을 때,
+
+class Block { ...}
+
+
+이 클래스의 배열을 ts로 지정하고 싶으면 다음처럼 하면 된다.
+
+
+cont arrayOfBlock:Block[]

@@ -1,0 +1,97 @@
+원리
+	1. 블록 : 데이터, 인덱스, 이전 블록 해쉬, 현재 해쉬, 타임스탬프 저장
+	2. 블록체인 : 블록들의 연결. 여기서는 쉽게 배열로 나타냄
+	3. 함수
+		-createHash : 인덱스, 데이터, 이전 해쉬, 타임스탬프로 해쉬를 생성하기
+		-getLatestBlock
+		-getBlockchain
+		-isBlockValid : 블록의 구조가 맞는지, 인덱스가 정확한지, 이전 블록 해쉬가 맞는지, 현재 해쉬를 다시 계산하여 정확히 나오는지 확인.
+		-createNewBlock : 블록을 새로 만들고, 블록이 유효한지 검사 후, 추가
+
+
+
+import * as CryptoJS from "crypto-js";
+
+class Block {
+    static calculateBlockHash = (index:number, previousHash:string, timestamp:number, data:string):string => {
+        return CryptoJS.SHA256(index + previousHash + timestamp + data).toString();
+    }
+    static validateStructure = (aBlock: Block) : boolean => 
+        typeof aBlock.index ==="number" && 
+        typeof aBlock.hash === "string" && 
+        typeof aBlock.previousHash == "string" && 
+        typeof aBlock.timestamp === "number" && 
+        typeof aBlock.data ==="string";
+
+    public index:number;
+    public hash:string;
+    public previousHash:string;
+    public data:string;
+    public timestamp:number;
+
+    constructor (index:number,
+        hash:string,
+        previousHash:string,
+        data:string,
+        timestamp:number) {
+           this.index= index;
+            this.hash = hash;
+           this.previousHash= previousHash;
+            this.data= data;
+            this.timestamp=timestamp; 
+        }
+}
+
+const genesisBlock:Block = new Block(0,"12313123123", "", "Hello", 123456);
+
+let blockchain:Block[] = [genesisBlock];
+
+const getBlockchain = () : Block[] => blockchain;
+
+const getLatesBlock = () : Block => blockchain[blockchain.length-1];
+
+const getNewTimeStamp = ():number=> Math.round(new Date().getTime() / 1000);
+
+const createNewBlock = (data:string) : Block => {
+    const previousBlock : Block = getLatesBlock();
+    const newIndex : number = previousBlock.index + 1;
+    const newTimestamp : number = getNewTimeStamp();
+    const newHash : string = Block.calculateBlockHash(newIndex, previousBlock.hash, newTimestamp, data);
+
+    const newBlock : Block = new Block(newIndex, newHash, previousBlock.hash, data, newTimestamp);
+    
+    addBlock(newBlock);
+
+    return newBlock;
+}
+
+const getHashforBlock = (aBlock:Block):string => Block.calculateBlockHash(aBlock.index, aBlock.previousHash, aBlock.timestamp, aBlock.data);
+
+const isBlockValid = (candidateBlock:Block, previousBlock:Block):boolean => {
+    if(!Block.validateStructure(candidateBlock)) {
+        return false;
+    } else if(previousBlock.index + 1 !== candidateBlock.index) {
+        return false;
+    } else if(previousBlock.hash !== candidateBlock.previousHash) {
+        return false;
+    } else if(getHashforBlock(candidateBlock) !== candidateBlock.hash) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+const addBlock = (candidateBlock:Block):void => {
+    if(isBlockValid(candidateBlock, getLatesBlock())) {
+        blockchain.push(candidateBlock);
+    }
+}
+
+
+createNewBlock("second block");
+createNewBlock("third block");
+createNewBlock("fourth block");
+
+console.log(blockchain);
+
+export {};

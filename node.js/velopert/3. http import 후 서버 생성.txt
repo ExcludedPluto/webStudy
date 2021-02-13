@@ -1,0 +1,30 @@
+필요한 모듈 import 하기
+	1. node.js에서 필요한 모듈을 불러올 땐, require 명령을 사용함
+	
+	const http = require("http");
+	
+
+
+서버 생성하기
+	1. http.createServer로 생성가능하다.
+	2. 다음 코드는 생성 후 listen 메소드를 사용하여 포트 8081과 bind 해주는 코드이다.
+
+	http
+   	.createServer((request, response) => {
+   		/*
+   	     		HTTP 헤더 전송
+   	     		HTTP Status : 200 : OK
+   	     		Content Type: text/plain
+   		*/
+
+     	 	response.writeHead(200, { "Content-Type": "text/plain" });
+
+      		/*
+        		Response Body를 "Hello World"로 설정
+    		*/
+
+      		response.end("Hello World\n");
+   	}).listen(8081);
+
+
+	node main.js 하면 127.0.0.1:8081에 가면 서버 생성됨

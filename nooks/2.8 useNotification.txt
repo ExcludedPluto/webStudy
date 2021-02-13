@@ -1,0 +1,41 @@
+제목과 옵션을 받아서, 그 받은 변수들로 만들어진 notification을 trigger하는 함수를 반환하는 hook
+
+
+export const useNotification = (title, options) => {
+   if ("Notification" in window) {					//notification 이 있을 때만 사용
+      const fireNotification = () => {
+         if (Notification.permission !== "granted") {			// 허용이 아니면 확인
+            Notification.requestPermission().then((permission) => {	// 허용을 받음
+               if (permission === "granted") {
+                  new Notification(title, options);
+               } else {
+                  return;
+               }
+            });
+         } else {
+            new Notification(title, options);
+         }
+      };
+
+      return fireNotification;						//함수 반환
+   }
+};
+
+
+
+ex)
+
+trigger 하는 함수를 반환하므로, 그냥 사용하면 된다.
+
+
+const App = () => {
+  const triggerNo = useNotification("Can I steal your kimchi", {
+    body: "I love kimchi"
+  });
+
+  return (
+    <div>
+      <button onClick={triggerNo}>Notification</button>
+    </div>
+  );
+};

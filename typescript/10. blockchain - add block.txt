@@ -1,0 +1,5 @@
+const addBlock = (candidateBlock:Block):void => {
+    if(isBlockValid(candidateBlock, getLatesBlock())) {
+        blockchain.push(candidateBlock);
+    }
+}

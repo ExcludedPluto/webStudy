@@ -1,0 +1,25 @@
+const name = "shin", age =25, gender = "male";
+
+const sayHi = (name, age, gender) => {
+    console.log(`Hello ${name}, you are ${age}, you are a ${gender}`);
+}
+
+sayHi(name, age);
+
+
+
+위 같은 상황에서 일반 자바스크립트는 gender가 넘어오지 않으면 그대로 undefined로 출력을 할 것이다.
+
+하지만 typescript에서는 에러를 내고, 따라서 무엇이 잘못됐는지 알게 해준다.
+
+
+
+
+여기서 함수 파라미터는 ? 표시로 optional 표시할 수 있다.
+
+
+const sayHi = (name, age, gender?) => {
+    console.log(`Hello ${name}, you are ${age}, you are a ${gender}`);
+}
+
+이렇게하면 똑같이 gender를 넣어주지 않아도 에러가 발생하지 않음

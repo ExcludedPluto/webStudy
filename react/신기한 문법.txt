@@ -1,0 +1,6 @@
+const App = () => {
+  const maxLength = (value) => value.length <= 10;	// 길이가 10 이하일때만 true를 리턴하도록 함
+  const name = useInput("Mr. ", maxLength);		// 초깃값으로 Mr.를 넣음
+  
+  return  <input placeholder="Name" {...name} />;	// 이런 식으로, value={name.value} onChange={name.onChange} 안하고 
+};							// 흩뿌려 줄 수 있음

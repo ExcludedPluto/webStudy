@@ -1,0 +1,27 @@
+객체 타입을 지정해 줄때 사용함
+
+interface Human {
+	name: string;
+	age:number;
+	gender:string;
+}
+
+const person = {
+	name: "shin",
+	age: 24,
+	gender: "male"
+}
+
+const sayHi = (person:Human):void => {
+	console.log(`Hello ${person.name}, you are ${person.age}, you are a ${person.gender}!`);
+}
+
+sayHi(person);
+
+
+
+
+이렇게 interface를 사용해 객체 타입을 지정해 줄 수 있음
+
+
+

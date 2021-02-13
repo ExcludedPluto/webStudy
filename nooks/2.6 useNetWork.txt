@@ -1,0 +1,48 @@
+함수를 받고, bool 값을 반환. 그 값은 온라인 상태일 때 true고 offline일때 false임. 
+
+받은 함수는 상태가 바뀔때 실행되는데, online일때 true가 들어가고 offline일때 false가 들어감
+
+
+
+
+export const useNetwork = (onChange) => {
+   const [status, setStatus] = useState(navigator.onLine);
+
+   const handleChange = () => {
+      if (typeof onChange === "function") {
+         onChange(navigator.onLine);				//navigator.onLine은 온라인일때 true, 오프라인일때 false
+      }
+      setStatus(navigator.onLine);
+   };
+
+   useEffect(() => {
+      window.addEventListener("online", handleChange);			//online으로 바뀌면 실행
+      window.addEventListener("offline", handleChange);			//offline으로 바뀌면 실행
+
+      return () => {
+         window.removeEventListener("online", handleChange);
+         window.removeEentListener("offline", handleChange);
+      };
+   }, []);
+
+   return status;
+};
+
+
+
+
+
+ex)
+
+const App = () => {
+  const handleChange = (onLine) => {
+    console.log(onLine ? "Online" : "offLine");
+  };
+  const onLine = useNetwork(handleChange);
+
+  return (
+    <div>
+      <h1>{onLine ? "OnLine" : "offLine"} </h1>
+    </div>
+  );
+};

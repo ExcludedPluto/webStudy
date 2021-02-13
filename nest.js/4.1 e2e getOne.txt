@@ -1,0 +1,42 @@
+시작하기 전에
+	
+	1. beforeEach -> beforeAll 로 바꾸어서 create 테스트로 생성한 데이터베이스를 그대로 들고가자
+
+	2. 실제 환경에서는 id를 파이프를 통해 transform 시키지만, 테스트 서버에서는 그렇지 않음.
+	  따라서 테스트 서버에서도 파이프를 추가하자.
+
+
+  beforeAll(async () => {
+    const moduleFixture: TestingModule = await Test.createTestingModule({
+      imports: [AppModule],
+    }).compile();
+
+    app = moduleFixture.createNestApplication();
+    app.useGlobalPipes(
+      new ValidationPipe({
+        whitelist: true,
+        forbidNonWhitelisted: true,
+        transform: true,
+      }),
+    );
+    await app.init();
+  });
+
+
+
+
+
+
+getOne은 /movies/:id 에서 돌아가는 것이므로 새로운 describe를 생성
+
+	-> request로 서버를 얻고, get으로 파라미터를 보내줌.
+
+
+  describe('/movies/:id', () => {
+    it('GET', () => {
+      return request(app.getHttpServer()).get('/movies/1').expect(200);
+    });
+    it('GET 404', () => {
+      return request(app.getHttpServer()).get('/movies/999').expect(404);
+    });
+  });

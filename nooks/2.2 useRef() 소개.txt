@@ -1,0 +1,11 @@
+useRef 는 컴포넌트 엘리먼트를 참조하고 있는 state
+
+
+
+ex) 5초뒤에 input 요소가 focus 됨
+	
+	const input = useRef();
+
+	setTimeout(() => input.current.focus(), 5000);		
+
+	return <input ref={input} />				// input 요소와 연결시킴

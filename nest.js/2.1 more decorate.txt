@@ -1,0 +1,27 @@
+id를 얻기위한 @Param
+
+ 	@Get(':id')
+  	getOne(@Param('id') movieId: string) {
+    		return `This will return one movie with the id : ${movieId}`;
+  	}
+
+
+
+query를 얻기위한 @Query
+
+	@Get('search')
+  	search(@Query('year') searchingYear: string) {
+    		return `We are searching for a movie made after : ${searchingYear}`;
+  	}
+
+	// 이때 search 가 :id 뒤에 있으면, url에 /movies/search로 들어와도, search가 id로 취급되어 getOne이 실행됨
+	// 따라서 search를 getOne 앞에 두자.
+
+
+같이 날아온 body를 얻기위한 @Body
+
+	@Post()
+  	create(@Body() movieData) {
+    		console.log(movieData);
+    		return movieData;
+  	}

@@ -1,0 +1,54 @@
+1. 먼저 설치해야함
+	yarn init 
+	yarn add typescript
+
+
+2. 설치되면 tsconfig.json을 만들고 아래처럼 적음
+
+
+{
+    "compilerOptions": {			// 컴파일러 옵션 설정
+        "module": "commonjs",			// 모듈은 일반 js로 한다는 것
+        "target": "ES2015",			// js 버전은 ES2015(ES6) 로 
+        "sourceMap": true,			// sourceMap 은 true
+	"outDir": "dist"			// 컴파일 후 생성되는 파일들을 저장할 공간
+    },
+
+    "include": [				// 컴파일할때 포함시킬 파일 목록
+        "src/**/*"				// src는 ts 파일들이 있는 곳. 모든 ts 파일을 포함함
+    ],
+
+    "exclude": [				// 컴파일할 때 포함 안시킬 목록
+	"node_modules"				
+    ]			
+}
+
+
+
+
+3. 타입스크립트 컴파일은 npx tsc 로 하는데, yarn start할 때 포함되도록 package.json 설정
+
+	...
+	"scripts": {
+		"prestart": "npx tsc",		// yarn start전에 npx tsc로 타입스크립트 컴파일을 먼저함
+		"start" : "node index.js"	// yarn start 시작하면 index.js 포함하라고 하는 것	
+	},
+
+	
+
+
+
+4. 3 대신 저장할 때마다 자동으로 컴파일을 시켜주는 용도로 tsc-watch 를 사용할 수 있음
+	$ yarn add tsc-watch --dev
+	
+
+	// package.json
+	"scripts" : {
+		"start": "tsc-watch --onSuccess \"node dist/index.js\" ",		//tsc-watch 가 성공하면 node dist/index.js 를 실행하는 것
+	}
+
+
+	-> 이후 yarn start 하면 자동으로 tsc-watch가 실행됨 -> 이후 감시 모드
+
+	-> 참고로 js코드는 dist에 ts 코드 src에 넣어서 분리시키고, ts 코드만 깃에 업로드하는 것을 권장함
+
