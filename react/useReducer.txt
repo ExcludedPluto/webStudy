@@ -1,0 +1,42 @@
+첫번째 파라미터로 reducer를 받고, 두번째로 초기 상태를 받음
+
+두번째로 넘어온 상태는 reducer 내에서 return일때 설정됨.
+
+그리고 배열을 반환하는데 첫번째로 state를 넘기로, 두번재로 dispatch를 넘김
+
+dispatch로 reducer를 조작하면 된다.
+
+
+
+const reducer = (state, action) => {
+   switch (action.type) {
+      case "LOADING":
+         return {
+            loading: true,
+            data: null,
+            error: null,
+         };
+      case "SUCCESS":
+         return {
+            loading: true,
+            data: action.data,
+            error: null,
+         };
+      case "ERROR":
+         return {
+            loading: false,
+            data: null,
+            error: action.error,
+         };
+      default:
+         throw new Error(`Unhandled action type : ${action.type}`);
+   }
+};
+
+
+
+  const [state, dispatch] = useReducer(reducer, {
+      loading: false,
+      data: null,
+      error: null,
+   });

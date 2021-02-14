@@ -1,0 +1,26 @@
+useInput 	: 초깃값과 함수를 받고, value와 onChange 함수를 반환. 바로 input에 넣어서, 입력을 처리해줄 수 있다.
+		  함수는 넘겨줘도 되고, 안 줘도 됨.
+
+
+
+
+useTitle	: 초기 제목을 받고, 반환되는 setTitle을 이용해 홈페이지 제목을 원하는 대로 바꿀 수 있음.
+		  
+
+useClick	: 콜백 함수를 넣어주고, element를 반환. ref로 트래킹하고 있는 요소를 클릭하면 넣어준 콜백함수 실행.
+
+
+useConfirm 	: 메세지와, 확인 시 실행할 함수, 취소 시 실행할 함수를 받고, confirm을 실행시켜주는 함수를 반환. 받고 바로 사용하면 됨.
+
+
+useFadeIn	: duration 과 delay를 받고, useRef 와 style을 반환하여 엘리먼트에 transition을 적용하는 hook
+
+
+useScroll	: 현재 스크롤의 x, y state를 반환.
+
+
+useAxios	: 옵션과 원한다면 axiosInstance를 받아서 axios를 trigger 시키는 hook.
+
+		  데이터와 loading 중인지, 에러가 있는지를 확인하는 state를 반환.
+	
+		  refetch를 trigger 시키는 함수도 반환하여 원할때 다시 실행하도록 한다. 

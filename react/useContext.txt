@@ -1,0 +1,43 @@
+const TodoStateContext = createContext();
+const TodoDispatchContext = createContext();
+
+export function TodoProvider({ children }) {
+  const [state, dispatch] = useReducer(todoReducer, initialTodos);
+
+  return (
+    <TodoStateContext.Provider value={state}>
+      <TodoDispatchContext.Provider value={dispatch}>
+        {children}
+      </TodoDispatchContext.Provider>
+    </TodoStateContext.Provider>
+  );
+}
+
+
+
+이렇게 만들고 사용할 때는
+
+	//app.js
+
+	const state = useContext(TodoStateContext);	이렇게 뽑아줘야함.
+
+
+
+
+이걸 편하게 하고 싶으면 context가 있는 파일에서
+
+	export const useTodoState = () => {
+		return useContext(TodoStateContext);
+	}
+	
+	이렇게하면 그냥
+	
+	const state = useTodoState() 하면 됨.
+
+
+
+
+
+값을 두개 이상 전달해주고 싶을 땐 객체로 넘기자.
+
+ <TodoStateContext.Provider value={{id : userId, state}}>
