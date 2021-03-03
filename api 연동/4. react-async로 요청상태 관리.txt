@@ -1,0 +1,34 @@
+https://github.com/async-library/react-async
+
+사용
+	인자는 객체 형태로 넘겨줌.
+
+	promiseFn : 요청 함수, 이 함수의 파라미터는 객체 형태로받아야 한다. (getUser = async({id}) => ...)
+	watch : 이 값이 바뀌면 재 실행함
+	watchFn : 함수 형태
+
+	그냥 넣으면 promiseFn의 파라미터로 들어감
+	
+
+	const {data:user, error, isLoading, reload } = useAsync({
+		promiseFn:getUser,
+		id,
+		watch: id
+	});
+
+
+	
+	반환값
+		data : 데이터
+		error
+		isLoading
+		reload	: 재 실행	
+
+
+	
+	
+	만약 처음에 요청을 실행하지않고, 사용자가 원할 때 실행하려면 다음처럼 promiseFn 대신 defecFn, reload 대신 run 을 넣자
+
+	const { data: users, error, isLoading, run } = useAsync({
+      		deferFn: getUsers,
+   	});

@@ -1,0 +1,85 @@
+axios 를 이용해 GET, PUT, POST, DELETE 등의 REST API 요청을 할 수 있다.
+
+	GET : 데이터 조회
+	POST : 데이터 등록
+	PUT : 데이터 전체 수정
+	DELETE : 데이터 제거
+	PATCH : 데이터 일부 수정
+
+
+
+
+예시 사용
+	axios.get('/users/1');		// 소문자로 이름을 넣음
+
+	axios.post('/users', {		// 주소, 두번째에는 정보를 입력
+		username: 'blala',
+		name: 'blala'
+	});
+
+	
+
+
+useState와 useEffect로 데이터 로딩하기
+
+	요청은 다음의 3가지 상태를 관리해줘야함
+	
+	1. 요청의 결과
+	2. 로딩상태
+	3. 에러
+
+
+
+데이터를 불러오는 함수를 선언하고, 불러오기 전엔 loading은 true로 바꾸고 끝나고 false로 바꾼다.
+
+요청은 항상 async/await로 불러와야한다.
+
+
+
+기본 구현
+
+function Users() {
+  const [users, setUsers] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const fetchUsers = async () => {
+    try {
+      // 요청이 시작 할 때에는 error 와 users 를 초기화하고
+      setError(null);
+      setUsers(null);
+      // loading 상태를 true 로 바꿉니다.
+      setLoading(true);
+      const response = await axios.get(
+        'https://jsonplaceholder.typicode.com/users'
+      );
+      setUsers(response.data); // 데이터는 response.data 안에 들어있습니다.
+    } catch (e) {
+      setError(e);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  if (loading) return <div>로딩중..</div>;
+  if (error) return <div>에러가 발생했습니다</div>;
+  if (!users) return null;
+  return (
+    <>
+      <ul>
+        {users.map(user => (
+          <li key={user.id}>
+            {user.username} ({user.name})
+          </li>
+        ))}
+      </ul>
+      <button onClick={fetchUsers}>다시 불러오기</button>
+    </>
+  );
+}
+
+
+
