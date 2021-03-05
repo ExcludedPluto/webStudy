@@ -1,0 +1,16 @@
+상태가 변화할때마다 감지하는 함수 subscribe
+
+	안에 함수를 등록해서, 상태가 변할 때 그 callback을 실행시킬 수 있다.
+
+	const onChange = () => {
+		number.innerText = countStore.getState();
+	}
+	countStore.subscribe(onChange);
+
+
+
+
+그 외  함수 사용
+
+	add.addEventListener("click", () => countStore.dispatch({ type: "ADD" }));
+	minus.addEventListener("click",() => countStore.dispatch({ type: "MINUS" }));

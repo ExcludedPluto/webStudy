@@ -1,0 +1,37 @@
+reducer 안에서 상태를 변화시키려면 action을 사용해야함
+
+	const countModifier = (count = 0, action) => {
+		if(action.type === "ADD") {
+			return count + 1;
+		} else if(action.type ==="MINUS") {
+			return count - 1;
+		} else {
+			return count;
+		}
+	}
+
+
+	이때 안에서 다음과같이 직접 상태를 변경시켜주지 않아도 됨.
+
+	if(action.type === "ADD") {
+		return count = count + 1;
+	} 
+	
+	왜냐하면 return되는 상태가 현재 상태가 되기때문. -> 어떤 걸 반환하든 그것이 상태가 됨
+	
+
+
+action을 사용할 때는 다음처럼 하면 된다.
+
+	countStore.dispatch({type:"ADD"})
+
+	action을 넣어줄 때는 dispatch로 하고, 객체를 넣어줌. type에 어떤 action인지 명시
+
+	다른 값도 넣어주고 싶으면 {type:"ADD", text: toDo} 이런 식으로 넣어주자.
+
+
+
+
+	상태를 받을 땐 -> getState
+
+	상태를 변경할 땐 -> dispatch
