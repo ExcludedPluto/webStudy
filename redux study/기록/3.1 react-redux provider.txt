@@ -1,0 +1,17 @@
+redux를 react에서 사용하기 위해선 Provider로 밑으로 뿌려줘야함
+
+밑처럼 Provider를 import 하고, 인자로 store를 넣어주자.
+
+
+//index.js
+
+import {Provider} from "react-redux"
+import store from "./store"
+
+ReactDOM.render(
+	<Provider store={store}>
+		<App />
+	</Provider>
+	document.getElementById("root");
+);
+

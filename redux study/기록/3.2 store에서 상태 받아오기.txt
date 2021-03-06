@@ -1,0 +1,32 @@
+Provider로 뿌려준 상태를 밑에서 받기위해선 connect 함수를 사용해야함.
+
+기본적으로 connect함수는 첫번째로 들어온 함수에 Provider가 뿌려준 상태를 보내고, 그 함수가 처리하고 반환한 객체를 props로 두번째 컴포넌트에 보냄.
+
+
+	ex)
+
+	//Home.js
+
+	function Home({ todos }) {
+		console.log(todos)
+	}	
+	
+	function mapStateToProps(state) {
+	   return { toDos: state };
+	}
+	
+	export default connect(mapStateToProps)(Home);
+
+
+
+
+이때 뿌려주는 중간 함수는 mapStateToProps라고 명명한다.
+
+또, Home에 들어가는 건 들어온 state뿐만이 아니라, 다른 곳에서 보낸 인자값도 들어간다.
+(지금은 {todos}라고해서 todos만 받는데, props라고 하면 전부다 들어옴(history 등등))
+
+mapStateToProps에서도 원한다면 원래 Home에 들어갈 다른 props들을 받을 수 잇다.
+	
+	function mapStateToProps(state, ownProps) {
+		...
+	}

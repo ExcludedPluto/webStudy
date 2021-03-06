@@ -1,0 +1,23 @@
+createStore 는 reducer, preloadedState, enhancer만 받을 수 있다.
+
+하지만 configureStore는 dev tools 등 더 받을 수 있다. 이는 공식문서 참조.
+
+	const store = configureStore({
+  		reducer,
+  		middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+  		devTools: process.env.NODE_ENV !== 'production',
+  		preloadedState,
+  		enhancers: [reduxBatch],
+	})
+
+
+
+
+중요한 기능은 configureStore는 redux dev tools를 자동으로 적용하게 해준다.
+
+createStore는 다음처럼 개발자 도구를 넣어줘야 작동이 됨.
+
+	
+	import { composeWithDevTools } from 'redux-devtools-extension'; 
+
+	const store = createStore(rootReducer, composeWithDevTools()); 

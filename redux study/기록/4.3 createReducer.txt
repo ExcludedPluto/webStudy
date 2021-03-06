@@ -1,0 +1,36 @@
+원래 리덕스에서 리듀서는 switch-case 문으로 구성되었다.
+
+하지만 createReducer를 통해 다음과 같이 간단하게 작성할 수 있다.
+
+
+
+	const reducer = createReducer([], {
+	   [addToDo]: (state, action) => {
+	      state.push({ text: action.payload, id: Date.now() });		// mutate
+	   }, 
+	   [deleteToDo]: (state, action) =>
+	      state.filter((toDo) => toDo.id !== action.payload),		// make new state
+	});
+
+
+
+이때 위 코드 상에서 addToDo, deleteToDo는 createAction으로 만든 액션인데, 
+꼭 createAction을 통해 안해도 되고, 그냥 action을 만들어도 된다.
+
+	const reducer = createReducer([], {
+   		[ADD]: (state, action) => {
+      			state.push({ text: action.text, id: Date.now() });
+   		},
+   		[DELETE]: (state, action) =>
+      			state.filter((toDo) => toDo.id !== action.id),
+	});
+
+
+
+이때 addToDo는 함수를 그냥 실행하였고, deleteToDo는 바로 반환하였는데,
+
+createReducer는 immer 뒤에서 실행되기 때문에, state를 mutate 가능하고, mutate할때는 함수를 그냥 실행해야하기 때문이다.
+
+뭔가를 리턴하는 건 '꼭' 새로운 state 여야함. 그냥 실행하면 createReducer가 알아서 한다.
+
+	 

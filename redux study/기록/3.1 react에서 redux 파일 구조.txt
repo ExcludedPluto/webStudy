@@ -1,0 +1,75 @@
+기본적으로 reducer와 store는 선언.
+
+그리고 reducer에서 사용할 문자열도 선언.
+
+reducer에 들어갈 객체를 만들어내는 함수도 선언하여 export 함.
+
+
+ 
+
+
+import { createStore } from "redux";
+
+const ADD = "ADD";
+const DELETE = "DELETE";
+
+export const addToDO = (text) => {
+   return {
+      type: ADD,
+      text,
+   };
+};
+
+export const deleteToDo = (id) => {
+   return {
+      type: DELETE,
+      id,
+   };
+};
+
+const reducer = (state = [], action) => {
+   switch (action.type) {
+      case ADD:
+         return [{ text: action.text, id: Date.now() }, ...state];
+      case DELETE:
+         return state.filter((toDo) => toDo.id !== action.id);
+      default:
+         return state;
+   }
+};
+
+const store = createStore(reducer);
+
+export default store;
+
+
+
+
+
+아니면 actionCreator는 따로 분리해서 한번에 export 한다
+
+const addToDo = (text) => {
+   return {
+      type: ADD,
+      text,
+   };
+};
+
+const deleteToDo = (id) => {
+   return {
+      type: DELETE,
+      id,
+   };
+};
+
+export const actionCreator= {
+   addToDo,
+   deleteToDo,
+};
+
+
+
+
+
+
+

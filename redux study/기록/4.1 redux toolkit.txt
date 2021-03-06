@@ -1,0 +1,10 @@
+react-redux를 사용할 때 단점은, 긴 코드를 작성해야한다는 점이다.
+
+reducer, actionCreator, actionNames 등등
+
+이것들을 간편하게 해주는 것이 redux toolkit이다.
+
+
+다음처럼 설치
+
+yarn add @reduxjs/toolkit

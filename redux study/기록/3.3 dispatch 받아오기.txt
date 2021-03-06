@@ -1,0 +1,20 @@
+connect 함수의 두번째 인자로 dispatch를 받아올 수 있다.
+
+다음과 같이 함.
+
+	function mapDispatchToProps(dispatch) {
+		return dispatch;
+	}
+
+	export default connect(mapStateToProps, mapDispatchToProps)(Home);
+
+
+이때 dispatch를 그냥 통째로 넘겨서 Home 안에서 dispatch(actionCreator.addTodo(text)) 하는 방법도 있지만,
+
+다음처럼 mapDispatchToProps 안에서 가공해서 넘기는 편이 더 깔끔하다.
+
+	function mapDispatchToProps(dispatch) {
+	   return {
+	      addTodo: (text) => dispatch(actionProvider.addToDo(text)),
+	   };
+	}
