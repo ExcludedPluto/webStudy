@@ -1,0 +1,33 @@
+const path = require("path");
+const sanitizeHtml = require("sanitize-html");
+
+
+app.get("/page/:pageId", (request, response) => {
+   fs.readdir("./data", (error, filelist) => {
+      var filteredId = path.parse(request.params.pageId).base;
+      fs.readFile(`data/${filteredId}`, "utf8", (err, description) => {
+         var title = request.params.pageId;
+         var sanitizedTitle = sanitizeHtml(title);
+         var sanitizedDescription = sanitizeHtml(description, {
+            allowedTags: ["h1"],
+         });
+         var list = template.list(filelist);
+         var html = template.HTML(
+            sanitizedTitle,
+            list,
+            `<h2>${sanitizedTitle}</h2>${sanitizedDescription}`,
+            ` <a href="/create">create</a>
+          <a href="/update?id=${sanitizedTitle}">update</a>
+          <form action="delete_process" method="post">
+            <input type="hidden" name="id" value="${sanitizedTitle}">
+            <input type="submit" value="delete">
+          </form>`
+         );
+         response.send(html);
+      });
+   });
+});
+
+
+
+param은 request.params.pageId로 바꿀 수 있으므로 그렇게 바꿈.

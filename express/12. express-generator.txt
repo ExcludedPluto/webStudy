@@ -1,0 +1,15 @@
+express 를 사용할 때 기본적으로 사용하는 골격이 있다. 
+
+이 골격을 자동으로 생성해주는 패키지이다.
+
+
+
+npm install express-generator -g
+
+이후
+
+express [프로젝트이름] 
+
+이렇게하면 자동으로 생성이 됨.
+
+

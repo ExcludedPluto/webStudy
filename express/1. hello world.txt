@@ -1,0 +1,13 @@
+설치
+	npm install express --save
+
+
+hello world 출력
+
+	const express = require("express");			
+	const app = express();					// express 는 그저 함수, application을 반환함.
+	
+	app.get("/", (req, res) => res.send("hello world!"));	// get은 라우트, send는 보내줌.
+	
+	// 이 listen이 실행되야 서버가 실행됨. 3000 포트번호
+	app.listen(3000, () => console.log("Example app listening on port 3000!"));	

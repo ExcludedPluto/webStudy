@@ -1,0 +1,22 @@
+const fs = require("fs");				// 파일에 접근하기 위한 fs import
+const template = require("./lib/template.js");		// 페이지 골격
+
+app.get("/", (request, response) => {
+   fs.readdir("./data", function (error, filelist) {
+      var title = "Welcome";
+      var description = "Hello, Node.js";
+      var list = template.list(filelist);
+      var html = template.HTML(
+         title,
+         list,
+         `<h2>${title}</h2>${description}`,
+         `<a href="/create">create</a>`
+      );
+      response.send(html);				//원래는 두줄로 response.writeHead(200) 를 통해 코드를, response.end(html)을 통해 데이터를 보냈는데 send로 한번에 가능
+   });
+});
+
+
+원래있던 코드를 복붙. 
+
+이로써 우리는 get 함수를 통해, 라우트를 하고, 그때 실행시킬 콜백을 작성할 수 있음을 알 수 있다.

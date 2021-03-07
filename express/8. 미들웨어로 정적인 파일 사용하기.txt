@@ -1,0 +1,23 @@
+app.use(express.static("public"))
+
+그냥 이렇게 넣어주면 된다.
+
+참고로 static() 안에는 서비스할 폴더의 주소를 입력해주면 됨.
+
+그럼 아래처럼 이용가능
+
+
+app.get("/", (request, response) => {
+   var title = "Welcome";
+   var description = "Hello, Node.js";
+   var list = template.list(request.list);
+   var html = template.HTML(
+      title,
+      list,
+      `<h2>${title}</h2>${description}
+        <img src="/images/hello.jpg" style="width:500px; height:auto; display:block; margin:10px;">		// 이미지 추가. /image/hello.js 로 접근
+      `,
+      `<a href="/create">create</a>`
+   );
+   response.send(html);
+});

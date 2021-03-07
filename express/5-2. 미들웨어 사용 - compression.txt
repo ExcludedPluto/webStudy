@@ -1,0 +1,7 @@
+데이터를 자동으로 압축해서 보내줌.
+
+
+const compression = require("compression");
+
+app.use(compression());
+

@@ -1,0 +1,21 @@
+helmet : 주된 보안 이슈들을 자동으로 처리해주는 모듈
+
+	npm install helmet --save
+
+	//main.js
+	
+	const helmet = require("helmet");
+	app.use(helmet());
+
+	이렇게 작성해주면 자동으로 해줌.
+
+
+nsp : dependencies에 문제가 잇는지 체크해줌
+
+	npm install nsp -g
+
+	하고 터미널에서
+
+	nsp check 하면
+	
+	문제를 감지해줌.

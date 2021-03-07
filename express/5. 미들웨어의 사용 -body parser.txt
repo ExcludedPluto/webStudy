@@ -1,0 +1,39 @@
+미들웨어 : 다른 사람이 만든 소프트웨어. 이를 부품으로 사용할 수 있게 함.
+
+
+기존 create_process 코드
+
+   	var body = "";
+   	request.on("data", function (data) {
+   	   body = body + data;
+   	});
+   	request.on("end", function () {
+   	   var post = qs.parse(body);
+	   ...
+
+	data가 올때마다 body에 추가해주다가, 끝나면 body를 parse 하여 사용함.
+
+
+
+
+body-parser 사용
+
+	설치 npm install body-parser --save
+
+		
+	const bodyParser = require("body-parser");
+
+	app.use(bodyParser.urlencoded({ extended: false }));
+
+
+	-> bodyParser.urlencoded() 은 post가 들어왔을때, 데이터를 가공해서 req.body에다 넣어준다.
+
+	따라서 기존 코드는 다음처럼 바뀔 수 있다.
+
+
+
+	var post = request.body;
+
+	
+
+	단 한 줄	

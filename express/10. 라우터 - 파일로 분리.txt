@@ -1,0 +1,45 @@
+라우터들을 파일로 분리
+
+
+기억해야할 거 4가지
+
+1. 폴더로 분리한 라우트들은 main.js 에 다음처럼 import 하라
+
+	const topicRouter = require("./routes/topic");
+
+	...
+
+	app.use("/topic", topicRouter);
+
+
+
+2. 분리된 라우트들은, main.js에 use 된 형식의 아래 존재하는 라우트가 되서, path에 다 표시해주면 안된다.
+
+	ex)
+
+	// ./routes/topic.js
+
+	app.get("/topic/create", (request, response) => {
+
+	->
+
+	app.get("/create", (request, response) => {
+
+	위처럼 create는 자동으로 /topic 밑에 있게됨.(단 이건 rest에서 첫번째 path만 그런거고, 콜백에서 다른 path를 호출할땐 풀 path를 써줘라.)
+
+
+3. 분리된 라우트가 있는 파일의 제일 상단에 다음 두줄을 추가하고, app 들을 router로 바꿔라
+	
+	const express = require("express");
+	const router = express.Router();		// main.js 에서는 const app = express(); 	즉, main에서 app이 router로 대치된 것.
+
+	app.get("/create", (request, response) => {
+
+	->
+
+	router.get("/create", (request, response) => {
+
+
+4. 마지막으로 export 하라
+
+	module.exports = router;

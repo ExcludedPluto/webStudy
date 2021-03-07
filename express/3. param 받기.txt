@@ -1,0 +1,19 @@
+다음처럼 get 라우트 주소부분에 /:id 이런식으로 넣고
+
+콜백 안에서 request.params 이렇게 받으면
+
+JSON 형식으로 "id" : "123123" 이렇게 넘어온다.
+
+
+
+	app.get("/page/:pageId", (request, response) => {
+	   response.send(request.params);
+	});
+
+	
+	ex)
+		http://localhost:3000/page/HTML 접속하면
+
+		{"pageId":"HTML"}
+
+		이렇게 나옴
