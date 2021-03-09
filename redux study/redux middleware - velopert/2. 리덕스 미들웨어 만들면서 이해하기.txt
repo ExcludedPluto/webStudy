@@ -1,0 +1,57 @@
+리덕스 미들웨어를 만들기 위한 템플릿
+
+	const middleware = store => next => action => {
+		...
+	}
+
+
+	다음과 같음
+
+	function middleware(store) {
+		return function(next) {
+			return function(action) {
+				...
+			}
+		}
+	}
+
+
+
+각 함수의 파라미터	
+
+	store : 리덕스 스토어 인스턴스. 이 안에 dispatch, getState, subscribe 내장 함수들이 있음
+
+	next : 액션을 다음 미들웨어에게 전달하는 함수. next(action) 이런식으로 사용함.
+		다음 미들웨어가 없다면 리듀서에게 액션을 전달해줌.
+		next() 가 호출하지않게 되면 액션이 무시됨.
+
+	action : 현재 처리하고 있는 액션 객체
+
+
+작동 원리
+
+	안에서 적당히 처리하고, dispatch(action)을 하면 그 action을 참조하는 다음 미들웨어 또는 리듀서로 간다.
+
+
+
+미들웨어 적용법
+
+	import { createStore, applyMiddleware } from "redux";
+
+	...
+	
+	const store = createStore(rootReducer, applyMiddleware(myLogger));
+
+
+
+예시 미들웨어
+
+	const myLogger = (store) => (next) => (action) => {
+	   console.log(action);
+	   const result = next(action);
+	
+	   console.log("\t", store.getState());			//next() 로 호출된 다음 미들웨어(리듀서) 작업이 끝나고 호출됨
+	   return result;
+	};
+	
+	export default myLogger;

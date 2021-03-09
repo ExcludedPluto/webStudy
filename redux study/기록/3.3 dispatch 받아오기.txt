@@ -1,4 +1,4 @@
-connect 함수의 두번째 인자로 dispatch를 받아올 수 있다.
+connect 함수의 두번째 인자로 dispatch를 받아올 수 있다.(또는 useDispatch 사용)
 
 다음과 같이 함.
 

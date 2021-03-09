@@ -1,4 +1,4 @@
-Provider로 뿌려준 상태를 밑에서 받기위해선 connect 함수를 사용해야함.
+Provider로 뿌려준 상태를 밑에서 받기위해선 connect 함수를 사용해야함.(또는 useSelector 사용)
 
 기본적으로 connect함수는 첫번째로 들어온 함수에 Provider가 뿌려준 상태를 보내고, 그 함수가 처리하고 반환한 객체를 props로 두번째 컴포넌트에 보냄.
 

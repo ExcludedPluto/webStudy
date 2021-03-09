@@ -1,0 +1,2 @@
+useSelector : 상태 조회
+useDispatch : 디스패치 조회

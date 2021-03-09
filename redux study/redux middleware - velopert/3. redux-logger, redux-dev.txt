@@ -1,0 +1,25 @@
+redux-logger : 액션 로그를 더 예쁘게 볼 수 있는 툴
+
+	yarn add redux-logger
+
+
+	// index.js
+	const logger from "redux-logger"
+
+	const store = createStore(rootReducer, applyMiddleware(logger));
+
+
+
+redux-devtools-extension : 리덕스 개발자도구와 미들웨어를 연결시키는 도구
+				사용법은 그냥 미들웨어를 감싸주면 된다.
+
+	yarn add redux-devtools-extension
+
+	//index.js
+
+	const { composeWithDevTools } from "redux-devtools-extension"
+
+	const store = createStore(reducer, composeWithDevTools(applyMiddleware(logger));
+
+
+	
