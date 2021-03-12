@@ -1,0 +1,21 @@
+session
+	: 창을 끄면 사라짐
+	: 일반적으로 생성하면 session	
+
+permanent
+	: 계속 유지됨
+	: 생성시 키=값 형태 옆에 Max-Age 또는 expires 를 붙여서 만들면된다.
+
+	ex)
+		max-age : 얼마동안 살것인가
+		expires : 언제 죽을 것인가.
+
+
+	//일반 node.js
+
+	{
+		"Set-Cookie": ["yummy_cookie=choco; Max-Age:${60*60*24*30}"]
+	}
+
+	//express
+	res.cookie("yummy_cookie", "choco", { maxAge: 60 * 60 * 24 * 30 });

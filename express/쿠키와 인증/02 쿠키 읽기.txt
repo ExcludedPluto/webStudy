@@ -1,0 +1,27 @@
+req.headers.cookie 안에 있다.
+
+이를 읽기 쉽게 바꾸기 위해
+	
+	npm install -s cookie
+
+로 쿠키 모듈을 다운받고
+
+	cookies = cookie.parse(req.headers.cookie)
+
+하자.
+
+
+그럼 cookies에 객체 형태로 들어와 있다.
+
+
+
+
+	const cookie = require("cookie");
+	
+	router.get("/", (req, res) => {
+	   let cookies = {};
+	   if (req.headers.cookie) {				// 쿠키가 없을 경우 무시
+	      cookies = cookie.parse(req.headers.cookie);
+	   }
+	   res.send(cookies);
+	});

@@ -1,0 +1,27 @@
+router.get("/", (req, res) => {
+   if (req.session.num) {
+      req.session.num += 1;
+   } else {
+      req.session.num = 1;
+   }
+   res.send(`Viewed : ${req.session.num}`);
+});
+
+
+
+여기서 req.session.num = 1 와 같이 세션에 뭔가를 저장하는 작업이 시간이 걸릴 수 있다.
+
+따라서 적당한 처리가 필요하다
+
+
+req.session.save(callback) 을 수행하게 되면, 세션에 저장하는 작업이 이루어지고, 저장이 끝난 후 callback을 실행한다.
+
+따라서 callback에서 send또는 redirect를 하게 되면 문제가 해결된다.
+
+
+
+	...
+	req.session.num = 1;
+	req.session.save(() => {
+		res.redirect("/")
+	});

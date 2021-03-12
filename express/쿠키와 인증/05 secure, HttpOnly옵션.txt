@@ -1,0 +1,21 @@
+쿠키를 생성할 때 secure 옵션을 주면, https 로 통신할 때만 req로 돌려줌.
+
+
+	//노드js
+
+	"yummy_cookie=choco Secure"
+
+	//express
+
+	res.cookie("yummy_cookie", "choco", {secure: true});
+
+
+httpOnly : http 로 통신할 때만 쿠키를 보여줌. 자바스크립트로 쿠키를 빼내는 경우가 많기에
+
+	//노드js
+
+	"yummy_cookie=choco HttpOnly"
+
+	//express
+
+	res.cookie("yummy_cookie", "choco", {httpOnly: true});

@@ -1,0 +1,27 @@
+다음처럼 "Set-Cookie"로 그 안에 "키=값"형태의 문자열 배열을 넘겨주면 된다.
+
+	router.get("/", (req, res) => {
+	   res.writeHead(200, {
+	      "Set-Cookie": [
+	         "yummy_cookie=choco",
+	         "tasey_cookie=strawberry",
+	         `Permenent=cookie; Max-Age=${60 * 60 * 24 * 30}`,
+	      ],
+	   });
+	   res.end("cookie");
+	});
+
+
+express에선 다음처럼 넣어줘야한다
+
+
+	res.cookie('rememberme', '1', { maxAge: 900000, httpOnly: true });
+	
+	첫번째는 key, 두번째는 value, 세번째는 옵션이다.
+
+
+
+쿠키엔 다음처럼 저장
+	
+	yummy_cookie = choco
+	tasty_cookie = strawberry

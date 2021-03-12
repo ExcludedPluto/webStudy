@@ -1,0 +1,21 @@
+Path 옵션을 설정하면, 정확히 일치하는 주소에서만 쿠키에 접근가능하도록 설정할 수 있다.
+
+
+	//노드js
+
+	"yummy_cookie=choco Path=/users/api/test"
+
+	//express
+
+	res.cookie("yummy_cookie", "choco", {path:"/users/api/test"});
+
+
+Domain 옵션을 설정하면, 설정한 서브도메인에서도 접근가능하도록 하는 것.
+
+	//노드js
+
+	"yummy_cookie=choco Domain=o2.org"
+
+	//express
+
+	res.cookie("yummy_cookie", "choco", {domain:"o2.org"});

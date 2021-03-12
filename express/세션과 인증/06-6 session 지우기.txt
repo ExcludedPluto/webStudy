@@ -1,0 +1,11 @@
+req.session.destroy(callback) 을 사용하면 됨.
+
+	ex)
+	
+		router.get("/logout", (req, res) => {
+			req.session.destroy((err) => {
+				res.redirect("/");
+			})
+		});
+
+	

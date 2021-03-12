@@ -1,0 +1,27 @@
+읽기
+
+	req 안에 들어온다.
+
+	router.get("/", (req, res) => {
+	   console.log(req.session);
+	   res.send("hello");
+	});
+
+	그냥 이렇게 하면 됨
+
+
+
+쓰기
+
+	req.session에 그냥 써주면 된다.
+
+	router.get("/", (req, res) => {
+	   console.log(req.session);
+	   if(req.session.num) {
+		   req.session.num += 1;
+	   } else {
+		   req.session.num = 1;
+	   }
+	   res.send("hello");
+	});
+	
